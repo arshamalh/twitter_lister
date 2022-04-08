@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  twitter_lister:
+    container_name: twitter_lister
+    build: .
+    restart: unless-stopped
+    networks:
+      - twitter_lister
+    environment:
+      - MONGODB_URI=mongodb://Arsham:tmdbTops@localhost:27008/tweets?authSource=admin
+      - DATABASE_NAME=tweets
+    ports:
+      - "105:105"
+    volumes:
+      - ./database:/usr/app/database
+      - ./main.py:/usr/app/main.py
+      - ./config:/usr/app/config
+      - ./logger:/usr/app/logger
+      - ./routes:/usr/app/routes
+      - ./ui/public:/ui
+
+networks:
+  twitter_lister:
+    name: twitter_lister
